@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>شارژ پنل و خرید رپورتاژ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Vazirmatn", sans-serif;
+    }
+
+    :root {
+      --bg1: #02142b;
+      --bg2: #062c66;
+      --bg3: #0b57d0;
+      --primary: #0A84FF;
+      --primary-light: #3ea0ff;
+      --accent: #77c3ff;
+      --white: #ffffff;
+      --text-soft: rgba(255,255,255,0.8);
+      --glass: rgba(255,255,255,0.10);
+      --border: rgba(255,255,255,0.16);
+      --success: #12d18e;
+      --warning: #ffb020;
+      --danger: #ff5d73;
+      --shadow: 0 20px 50px rgba(0,0,0,0.35);
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top right, rgba(84, 170, 255, 0.18), transparent 25%),
+        radial-gradient(circle at bottom left, rgba(0, 153, 255, 0.15), transparent 30%),
+        linear-gradient(135deg, var(--bg1), var(--bg2) 45%, #031a3a 100%);
+      color: var(--white);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      width: 380px;
+      height: 380px;
+      border-radius: 50%;
+      filter: blur(70px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    body::before {
+      top: -80px;
+      right: -80px;
+      background: rgba(35, 129, 255, 0.22);
+    }
+
+    body::after {
+      bottom: -120px;
+      left: -80px;
+      background: rgba(0, 94, 255, 0.18);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 18px 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 30px 0 25px;
+      animation: fadeUp 0.9s ease;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(18px);
+      border-radius: 999px;
+      color: var(--accent);
+      font-size: 13px;
+      margin-bottom: 18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.16);
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 4vw, 52px);
+      font-weight: 800;
+      line-height: 1.4;
+      margin-bottom: 14px;
+      text-shadow: 0 6px 20px rgba(0,0,0,0.22);
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 0 auto;
+      color: var(--text-soft);
+      font-size: clamp(14px, 2vw, 18px);
+      line-height: 2;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      margin-top: 34px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.08), transparent 30%, transparent 70%, rgba(255,255,255,0.05));
+      pointer-events: none;
+    }
+
+    .main-card {
+      padding: 30px;
+      animation: fadeUp 1s ease;
+    }
+
+    .side-card {
+      padding: 24px;
+      animation: fadeUp 1.15s ease;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .status-chip {
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #d8efff;
+      background: rgba(22, 120, 255, 0.18);
+      border: 1px solid rgba(126, 196, 255, 0.18);
+    }
+
+    .price-box {
+      position: relative;
+      padding: 28px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(8, 86, 190, 0.55), rgba(7, 42, 100, 0.45));
+      border: 1px solid rgba(255,255,255,0.12);
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+
+    .price-box::after {
+      content: "";
+      position: absolute;
+      left: -20%;
+      top: -40%;
+      width: 240px;
+      height: 240px;
+      background: radial-gradient(circle, rgba(255,255,255,0.18), transparent 65%);
+      transform: rotate(15deg);
+    }
+
+    .price-label {
+      color: rgba(255,255,255,0.8);
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .price-rial {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .price-toman {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.12);
+      color: #dff2ff;
+      font-size: 15px;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+
+    .feature {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      color: var(--text-soft);
+      font-size: 14px;
+      transition: 0.3s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.09);
+      color: var(--white);
+    }
+
+    .methods {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 16px;
+    }
+
+    .method-btn {
+      position: relative;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      border-radius: 22px;
+      padding: 20px 18px;
+      text-align: right;
+      color: var(--white);
+      background: linear-gradient(135deg, rgba(255,255,255,0.10), rgba(255,255,255,0.05));
+      border: 1px solid rgba(255,255,255,0.14);
+      transition: all 0.3s ease;
+      min-height: 130px;
+      overflow: hidden;
+    }
+
+    .method-btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.10), transparent);
+      transform: translateX(-120%);
+      transition: 0.7s ease;
+    }
+
+    .method-btn:hover::before {
+      transform: translateX(120%);
+    }
+
+    .method-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+      border-color: rgba(255,255,255,0.22);
+    }
+
+    .method-btn.active {
+      background: linear-gradient(135deg, rgba(10,132,255,0.35), rgba(0,72,170,0.30));
+      border-color: rgba(137, 204, 255, 0.5);
+      box-shadow: 0 0 0 1px rgba(145, 214, 255, 0.12), 0 20px 40px rgba(0,0,0,0.25);
+    }
+
+    .method-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .method-desc {
+      font-size: 13px;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.78);
+    }
+
+    .icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.10);
+      font-size: 22px;
+    }
+
+    .message-box,
+    .bank-box,
+    .tracking-box {
+      margin-top: 18px;
+      border-radius: 22px;
+      padding: 18px;
+      display: none;
+      animation: fadeUp 0.4s ease;
+    }
+
+    .message-box {
+      background: rgba(255, 93, 115, 0.12);
+      border: 1px solid rgba(255, 93, 115, 0.30);
+      color: #ffe6eb;
+    }
+
+    .message-box.show,
+    .bank-box.show,
+    .tracking-box.show {
+      display: block;
+    }
+
+    .bank-box {
+      background: rgba(18, 209, 142, 0.09);
+      border: 1px solid rgba(18, 209, 142, 0.24);
+    }
+
+    .bank-title,
+    .tracking-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .bank-info {
+      display: grid;
+      gap: 12px;
+    }
+
+    .bank-item {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .bank-item label {
+      display: block;
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 6px;
+    }
+
+    .bank-item strong {
+      display: block;
+      font-size: 16px;
+      word-break: break-word;
+      line-height: 1.9;
+    }
+
+    .tracking-box {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .tracking-text {
+      color: rgba(255,255,255,0.82);
+      font-size: 14px;
+      line-height: 2;
+      margin-bottom: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .form-group input {
+      flex: 1;
+      min-width: 220px;
+      height: 54px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.08);
+      color: var(--white);
+      padding: 0 16px;
+      outline: none;
+      font-size: 15px;
+      transition: 0.25s ease;
+    }
+
+    .form-group input::placeholder {
+      color: rgba(255,255,255,0.45);
+    }
+
+    .form-group input:focus {
+      border-color: rgba(126, 196, 255, 0.65);
+      box-shadow: 0 0 0 4px rgba(72, 157, 255, 0.12);
+    }
+
+    .submit-btn {
+      height: 54px;
+      padding: 0 22px;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      color: white;
+      font-weight: 700;
+      background: linear-gradient(135deg, #1488ff, #005eea);
+      box-shadow: 0 12px 28px rgba(8, 100, 255, 0.35);
+      transition: 0.25s ease;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 34px rgba(8, 100, 255, 0.42);
+    }
+
+    .mini-card {
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      margin-bottom: 16px;
+    }
+
+    .mini-card h3 {
+      font-size: 17px;
+      margin-bottom: 10px;
+    }
+
+    .mini-card p {
+      color: var(--text-soft);
+      line-height: 2;
+      font-size: 14px;
+    }
+
+    .steps {
+      display: grid;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .step-num {
+      width: 34px;
+      height: 34px;
+      flex: 0 0 34px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #1b94ff, #006df0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      box-shadow: 0 10px 22px rgba(0, 109, 240, 0.25);
+    }
+
+    .step p {
+      color: rgba(255,255,255,0.8);
+      line-height: 2;
+      font-size: 14px;
+    }
+
+    .note {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255, 176, 32, 0.10);
+      border: 1px solid rgba(255, 176, 32, 0.22);
+      color: #ffe8b3;
+      font-size: 13px;
+      line-height: 2;
+    }
+
+    .success-msg {
+      margin-top: 14px;
+      display: none;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(18, 209, 142, 0.12);
+      border: 1px solid rgba(18, 209, 142, 0.26);
+      color: #dbfff2;
+      line-height: 1.9;
+      font-size: 14px;
+    }
+
+    .success-msg.show {
+      display: block;
+      animation: fadeUp 0.35s ease;
+    }
+
+    footer {
+      text-align: center;
+      color: rgba(255,255,255,0.5);
+      margin-top: 28px;
+      font-size: 13px;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 980px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 20px 14px 50px;
+      }
+
+      .main-card,
+      .side-card {
+        padding: 18px;
+      }
+
+      .features,
+      .methods {
+        grid-template-columns: 1fr;
+      }
+
+      .price-box {
+        padding: 20px;
+      }
+
+      .section-title {
+        font-size: 21px;
+      }
+
+      .form-group {
+        flex-direction: column;
+      }
+
+      .submit-btn,
+      .form-group input {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <section class="hero">
+      <div class="badge">💙 پرداخت امن و ثبت سریع درخواست شارژ پنل</div>
+      <h1>شارژ پنل و خرید رپورتاژ</h1>
+      <p>
+        برای شارژ پنل رپورتاژ خود، مبلغ موردنظر را از یکی از روش‌های زیر پرداخت کنید.
+        پس از واریز و ثبت شماره پیگیری، درخواست شما بررسی شده و پنل در کوتاه‌ترین زمان شارژ خواهد شد.
+      </p>
+    </section>
+
+    <section class="grid">
+      <div class="card main-card">
+        <div class="title-row">
+          <h2 class="section-title">انتخاب روش پرداخت</h2>
+          <div class="status-chip">مبلغ نهایی ثابت</div>
+        </div>
+
+        <div class="price-box">
+          <div class="price-label">مبلغ قابل پرداخت</div>
+          <div class="price-rial">67,300,000 ریال</div>
+          <div class="price-toman">معادل 6,730,000 تومان</div>
+        </div>
+
+        <div class="features">
+          <div class="feature">✨ شارژ سریع پنل پس از بررسی پرداخت</div>
+          <div class="feature">🔒 نمایش اطلاعات پرداخت به‌صورت امن</div>
+          <div class="feature">📱 کاملاً ریسپانسیو برای موبایل و دسکتاپ</div>
+          <div class="feature">⚡ رابط کاربری مدرن و حرفه‌ای</div>
+        </div>
+
+        <div class="methods">
+          <button class="method-btn" id="onlineBtn">
+            <div class="icon">🌐</div>
+            <div class="method-title">پرداخت از طریق درگاه آنلاین</div>
+            <div class="method-desc">
+              پرداخت مستقیم و سریع از طریق درگاه اینترنتی
+            </div>
+          </button>
+
+          <button class="method-btn" id="cardBtn">
+            <div class="icon">💳</div>
+            <div class="method-title">پرداخت از طریق کارت به کارت</div>
+            <div class="method-desc">
+              مشاهده اطلاعات کارت و ثبت شماره پیگیری واریز
+            </div>
+          </button>
+        </div>
+
+        <div class="message-box" id="onlineMessage">
+          <strong>درگاه آنلاین در دسترس نیست</strong>
+          <div style="margin-top: 8px; line-height: 2;">
+            در حال حاضر امکان پرداخت از طریق درگاه وجود ندارد، لطفاً از طریق پرداخت کارت به کارت اقدام کنید.
+          </div>
+        </div>
+
+        <div class="bank-box" id="bankBox">
+          <div class="bank-title">اطلاعات پرداخت کارت به کارت</div>
+          <div class="bank-info">
+            <div class="bank-item">
+              <label>شماره کارت</label>
+              <strong>6219861833872467</strong>
+            </div>
+            <div class="bank-item">
+              <label>شماره شبا</label>
+              <strong>IR950560611828006384143502</strong>
+            </div>
+            <div class="bank-item">
+              <label>به نام</label>
+              <strong>آیلا تقی زاده اصل</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="tracking-box" id="trackingBox">
+          <div class="tracking-title">ثبت شماره پیگیری واریز</div>
+          <div class="tracking-text">
+            پس از واریز، لطفاً شماره پیگیری تراکنش خود را در کادر زیر وارد کنید تا پس از بررسی،
+            پنل رپورتاژ شما شارژ شود.
+          </div>
+
+          <div class="form-group">
+            <input type="text" id="trackingInput" placeholder="شماره پیگیری واریز را وارد کنید" />
+            <button class="submit-btn" id="submitTracking">ثبت شماره پیگیری</button>
+          </div>
+
+          <div class="success-msg" id="successMsg">
+            ✅ شماره پیگیری شما با موفقیت ثبت شد. پس از بررسی، پنل رپورتاژ شما شارژ خواهد شد.
+          </div>
+        </div>
+      </div>
+
+      <div class="card side-card">
+        <div class="mini-card">
+          <h3>درباره این پرداخت</h3>
+          <p>
+            این صفحه برای شارژ پنل و خرید رپورتاژ طراحی شده و مبلغ آن به‌صورت ثابت روی
+            <strong style="color:#fff;">67,300,000 ریال</strong> تعیین شده است.
+          </p>
+        </div>
+
+        <div class="mini-card">
+          <h3>مراحل انجام کار</h3>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <p>روش پرداخت را انتخاب کنید.</p>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <p>در صورت انتخاب کارت به کارت، مبلغ را به حساب اعلام شده واریز کنید.</p>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <p>شماره پیگیری واریز را ثبت کنید تا فرآیند بررسی و شارژ پنل انجام شود.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="note">
+          توجه: لطفاً شماره پیگیری را با دقت وارد کنید تا فرآیند بررسی بدون تأخیر انجام شود.
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      طراحی شده برای صفحه پرداخت شارژ پنل رپورتاژ
+    </footer>
+  </div>
+
+  <script>
+    const onlineBtn = document.getElementById("onlineBtn");
+    const cardBtn = document.getElementById("cardBtn");
+    const onlineMessage = document.getElementById("onlineMessage");
+    const bankBox = document.getElementById("bankBox");
+    const trackingBox = document.getElementById("trackingBox");
+    const submitTracking = document.getElementById("submitTracking");
+    const trackingInput = document.getElementById("trackingInput");
+    const successMsg = document.getElementById("successMsg");
+
+    onlineBtn.addEventListener("click", () => {
+      onlineBtn.classList.add("active");
+      cardBtn.classList.remove("active");
+      onlineMessage.classList.add("show");
+      bankBox.classList.remove("show");
+      trackingBox.classList.remove("show");
+      successMsg.classList.remove("show");
+    });
+
+    cardBtn.addEventListener("click", () => {
+      cardBtn.classList.add("active");
+      onlineBtn.classList.remove("active");
+      onlineMessage.classList.remove("show");
+      bankBox.classList.add("show");
+      trackingBox.classList.add("show");
+    });
+
+    submitTracking.addEventListener("click", () => {
+      const value = trackingInput.value.trim();
+      if (!value) {
+        alert("لطفاً شماره پیگیری را وارد کنید.");
+        return;
+      }
+      successMsg.classList.add("show");
+      trackingInput.value = "";
+    });
+  </script>
+</body>
+</html>
